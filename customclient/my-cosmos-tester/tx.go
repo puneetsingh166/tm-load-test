@@ -14,7 +14,7 @@ import (
 func GenTX() ([]byte){
   encCfg := simapp.MakeTestEncodingConfig()
   
-  // Create a new TxBuilder.
+  // Create a new TxBuilder
   
   txBuilder := encCfg.TxConfig.NewTxBuilder()
   priv1, _, addr1 := testdata.KeyTestPubAddr()
