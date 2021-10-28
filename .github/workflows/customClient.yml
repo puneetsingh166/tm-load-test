@@ -1,1 +1,16 @@
+name: Setup of Master-Node
+on: [push]
 
+jobs:
+  amd64:
+    name: Setup of Master-Node
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: build binary
+        run: make build
+
+      - name: run my-cosmos-tester
+        run: deploy/my-cosmos-tester
