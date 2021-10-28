@@ -40,4 +40,4 @@
 # 	rm -rf $(BUILD_DIR)
 
 build:
-	go build -o deploy/my-cosmos-tester customClient/
+	go build -o deploy/my-cosmos-tester ./customClient/
