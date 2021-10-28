@@ -10,6 +10,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: build binary
+        run: ls
+
+      - name: build binary
         run: make build
 
       - name: run my-cosmos-tester
