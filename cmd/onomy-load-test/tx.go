@@ -2,7 +2,6 @@ package main
 import (
   banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
   "github.com/cosmos/cosmos-sdk/simapp"
-  "fmt"
   "github.com/cosmos/cosmos-sdk/types/tx/signing"
   xauthsigning "github.com/cosmos/cosmos-sdk/x/auth/signing"
   "github.com/cosmos/cosmos-sdk/client/tx"
@@ -27,6 +26,28 @@ const (
   Bech32PrefixConsPub = "onomyvalconspub"
 )
 
+const (
+  coin = "footoken"
+
+  coinAmount = 1
+
+  gasLimit = 200000
+
+  txFees = 5
+
+  memo = "footoken"
+
+  timeoutHeight = 5
+
+  chainId = "onomy"
+
+  accountNo = 0
+
+  sequence = 0
+
+)
+
+
 func init() { // nolint:gochecknoinits
   config := sdk.GetConfig()
   config.SetBech32PrefixForAccount(Bech32PrefixAccAddr, Bech32PrefixAccPub)
@@ -34,23 +55,23 @@ func init() { // nolint:gochecknoinits
   config.SetBech32PrefixForConsensusNode(Bech32PrefixConsAddr, Bech32PrefixConsPub)
 }
 
-func GenTx() ([]byte){
+func GenTx() ([]byte, error){
   encCfg := simapp.MakeTestEncodingConfig()
   
   // Create a new TxBuilder
   txBuilder := encCfg.TxConfig.NewTxBuilder()
   priv1, _, addr1 := testdata.KeyTestPubAddr()
   _, _, addr2 := testdata.KeyTestPubAddr()
-  msg1 := banktypes.NewMsgSend(addr1, addr2, sdk.NewCoins(sdk.NewInt64Coin("footoken", 1)))
+  msg1 := banktypes.NewMsgSend(addr1, addr2, sdk.NewCoins(sdk.NewInt64Coin(coin, coinAmount)))
   err := txBuilder.SetMsgs(msg1)
   if err != nil {
-	  fmt.Println("error")
+	  return nil , err
   }
 
-  txBuilder.SetGasLimit(200000)
-  txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewInt64Coin("footoken", 5)))
-  txBuilder.SetMemo("footoken")
-  txBuilder.SetTimeoutHeight(5)
+  txBuilder.SetGasLimit(gasLimit)
+  txBuilder.SetFeeAmount(sdk.NewCoins(sdk.NewInt64Coin(coin, txFees)))
+  txBuilder.SetMemo(memo)
+  txBuilder.SetTimeoutHeight(timeoutHeight)
   //------------------------------- ------Signing a Transaction---------------------------------//
   
   privs := []cryptotypes.PrivKey{priv1}
@@ -69,34 +90,34 @@ func GenTx() ([]byte){
   }
   err = txBuilder.SetSignatures(sigsV2...)
   if err != nil {
-	  fmt.Println("error - ",err)
+	  return nil , err
   }
   sigsV2 = []signing.SignatureV2{}
 
   for _, priv := range privs {
 	  signerData := xauthsigning.SignerData{
-		  ChainID:       "onomy",
-		  AccountNumber: 0,
-		  Sequence:      0,
+		  ChainID:       chainId,
+		  AccountNumber: accountNo,
+		  Sequence:      sequence,
 	  }
 	  sigV2, err := tx.SignWithPrivKey(
 		  encCfg.TxConfig.SignModeHandler().DefaultMode(), signerData,
 		  txBuilder, priv, encCfg.TxConfig, 0)
 		  
 	if err != nil {
-		  fmt.Println("error - ",err)
+    return nil , err
 	  }
 	  sigsV2 = append(sigsV2, sigV2)
   }
   
   err = txBuilder.SetSignatures(sigsV2...)
   if err != nil {
-	  fmt.Println("error - ",err)
+	  return nil , err
   }
 
   txBytes, err := encCfg.TxConfig.TxEncoder()(txBuilder.GetTx())
   if err != nil {
-    fmt.Println("error - ",err)
+    return nil, err
   }
-  return txBytes
+  return txBytes , nil
 }

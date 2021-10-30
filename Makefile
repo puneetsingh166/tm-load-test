@@ -40,4 +40,4 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 build-custom-client:
-	go build -o deploy/cosmos-load-test ./customClient/
+	go build -o deploy/onomy-load-test ./cmd/onomy-load-test/

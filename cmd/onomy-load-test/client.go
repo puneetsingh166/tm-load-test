@@ -34,5 +34,6 @@ func (f *MyABCIAppClientFactory) NewClient(cfg loadtest.Config) (loadtest.Client
 // loadtest package, so don't worry about that. Only return an error here if you
 // want to completely fail the entire load test operation.
 func (c *MyABCIAppClient) GenerateTx() ([]byte, error) {
-	 return GenTx(), nil
+    txBytes, _:=GenTx()
+	return txBytes, nil
 }

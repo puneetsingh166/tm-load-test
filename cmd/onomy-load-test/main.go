@@ -5,7 +5,7 @@ import (
    
 )
 func main() {
-    if err := loadtest.RegisterClientFactory("cosmos-testing-app", &MyABCIAppClientFactory{}); err != nil {
+    if err := loadtest.RegisterClientFactory("onomy-testing-app", &MyABCIAppClientFactory{}); err != nil {
         panic(err)
     }
     // The loadtest.Run method will handle CLI argument parsing, errors, 
@@ -13,9 +13,9 @@ func main() {
     // operations, etc. All it needs is to know which client factory to use for
     // its load testing.
     loadtest.Run(&loadtest.CLIConfig{
-        AppName:              "cosmos-load-test",
-        AppShortDesc:         "cosmos testing application for My cosmos node",
+        AppName:              "onomy-load-test",
+        AppShortDesc:         "onomy testing application for My cosmos node",
         AppLongDesc:          "Some long description on how to use the tool",
-        DefaultClientFactory: "cosmos-testing-app",
+        DefaultClientFactory: "onomy-testing-app",
     })
 }

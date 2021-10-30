@@ -3,7 +3,7 @@ In order to use the tools, you will need:
 
 * Go 1.13+
  ## Building
-To build the `tm-load-test custom client` binary go in the `customclient/cosmos-load-test` directory:
+To build the `tm-load-test custom client` binary go in the `customclient/onomy-load-test` directory:
 Run this command ``` go build ```
 
 ## Usage
@@ -14,14 +14,14 @@ Run this command ``` go build ```
 In standalone mode, `tm-load-test custom client` operates in a similar way to `tm-bench`:
 
 ```bash
-cosmos-load-test -c 1 -T 10 -r 1000 -s 250 \
+onomy-load-test -c 1 -T 10 -r 1000 -s 250 \
     --broadcast-tx-method async \
     --endpoints ws://tm-endpoint1.somewhere.com:26657/websocket,ws://tm-endpoint2.somewhere.com:26657/websocket
 ```
 To see a description of what all of the parameters mean, simply run:
 
 ```bash
-cosmos-load-test --help
+onomy-load-test --help
 ```
 
 ### Master/Slave Mode
@@ -38,7 +38,7 @@ On the master machine:
 # Run tm-load-test custom client with similar parameters to the standalone mode, but now 
 # specifying the number of slaves to expect (--expect-slaves) and the host:port
 # to which to bind (--bind) and listen for incoming slave requests.
-cosmos-load-test \
+onomy-load-test \
     master \
     --expect-slaves 2 \
     --bind localhost:26670 \
@@ -51,14 +51,14 @@ On each slave machine:
 
 ```bash
 # Just tell the slave where to find the master - it will figure out the rest.
-cosmos-load-test slave --master ws://localhost:26680
+onomy-load-test slave --master ws://localhost:26680
 ```
 
 For more help, see the command line parameters' descriptions:
 
 ```bash
-cosmos-load-test master --help
-cosmos-load-test slave --help
+onomy-load-test master --help
+onomy-load-test slave --help
 ```
 
 ## Monitoring
@@ -103,13 +103,13 @@ a CSV file once testing completes by specifying the `--stats-output` flag:
 
 ```bash
 # In standalone mode
-cosmos-load-test -c 1 -T 10 -r 1000 -s 250 \
+onomy-load-test -c 1 -T 10 -r 1000 -s 250 \
     --broadcast-tx-method async \
     --endpoints ws://tm-endpoint1.somewhere.com:26657/websocket,ws://tm-endpoint2.somewhere.com:26657/websocket \
     --stats-output /path/to/save/stats.csv
 
 # From the master in master/slave mode
-cosmos-load-test \
+onomy-load-test \
     master \
     --expect-slaves 2 \
     --bind localhost:26670 \
