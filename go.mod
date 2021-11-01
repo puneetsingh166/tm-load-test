@@ -3,7 +3,6 @@ module github.com/onomyprotocol/tm-load-test
 go 1.15
 
 require (
-	github.com/cosmos/cosmos-sdk v0.44.0
 	github.com/gorilla/websocket v1.4.2
 	github.com/prometheus/client_golang v1.11.0
 	github.com/satori/go.uuid v1.2.0
@@ -12,5 +11,3 @@ require (
 	github.com/tendermint/tendermint v0.34.14
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 )
-
-replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1

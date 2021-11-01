@@ -39,5 +39,3 @@ lint: $(GOPATH)/bin/golangci-lint
 clean:
 	rm -rf $(BUILD_DIR)
 
-build-onomy-load-test:
-	go build -o deploy/onomy-load-test ./cmd/onomy-load-test/
